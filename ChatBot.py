@@ -1,4 +1,5 @@
-import time
+from time import sleep
+from termcolor import colored
 
 class Bot:
 
@@ -11,12 +12,15 @@ class Bot:
     def _think(self, s):
         return s
 
+    def _format(self, s):
+        return colored(s, 'green')
+
     def run(self):
-        time.sleep(Bot.wait)
-        print(self.q)
+        sleep(Bot.wait)
+        print(self._format(self.q))
         self.a = input()
-        time.sleep(Bot.wait)
-        print(self._think(self.a))
+        sleep(Bot.wait)
+        print(self._format(self._think(self.a)))
 
 
 class HelloBot(Bot):
@@ -44,6 +48,21 @@ class favoriteColorBot(Bot):
     def _think(self, s):
         colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'purple']
         return f"You like {s.lower()}? My favorite color is {random.choice(colors)}."
+
+from simpleeval import simple_eval
+
+class CalcBot(Bot):
+    def __init__(self):
+        self.q = "Through recent upgrade I can do calculation now. Input some arithmetic expression to try:"
+
+    def _think(self, s):
+        result = simple_eval(s)
+        return f"Done. Result = {result}."
+
+    
+        
+        
+            
 
 # 下面我们需要一个主流程把上面的所有 Bot 串起来（这样就可以一起运行了），这是我们的对话系统的主类定义：
 
